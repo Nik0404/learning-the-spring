@@ -7,10 +7,16 @@ import java.util.ArrayList;
 
 import com.leson.lesonSpring.dto.UserDto;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,14 +37,24 @@ public class User {
 
 	private String password;
 
+	@Embedded
+	@ElementCollection
 	private Set<UserDto> follower = new HashSet<UserDto>();
 
+	@Embedded
+	@ElementCollection
 	private Set<UserDto> following = new HashSet<UserDto>();
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Story> stories = new ArrayList<>();
 
+	@ManyToMany
 	private List<Post> savedPost = new ArrayList<>();
 
+	public User() {
+		
+	}
+	
 	public User(Integer id, String username, String name, String email, String mobileString, String website, String bio,
 			String gender, String image, String password, Set<UserDto> follower, Set<UserDto> following,
 			List<Story> stories, List<Post> savedPost) {

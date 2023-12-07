@@ -10,6 +10,10 @@ public class UserDto {
 	private String name;
 	private String userImage;
 
+	public UserDto() {
+		
+	}
+
 	public UserDto(Integer id, String username, String email, String name, String userImage) {
 		super();
 		this.id = id;
@@ -76,7 +80,5 @@ public class UserDto {
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
 				&& Objects.equals(userImage, other.userImage) && Objects.equals(username, other.username);
 	}
-	
-	
 
 }
