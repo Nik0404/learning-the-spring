@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.leson.lesonSpring.dto.UserDto;
 import com.leson.lesonSpring.exceptions.UserException;
 import com.leson.lesonSpring.modal.User;
 import com.leson.lesonSpring.repository.UserRepository;
 
+@Service
 public class UserServiceImplementation implements UserService {
 
 	@Autowired
@@ -30,7 +32,7 @@ public class UserServiceImplementation implements UserService {
 			throw new UserException("Username is Alerady Token...");
 		}
 
-		if (user.getEmail() == null || user.getName() == null || user.getPassword() == null
+		if (user.getEmail() == null || user.getPassword() == null || user.getName() == null
 				|| user.getUsername() == null) {
 			throw new UserException("All filds are required");
 		}
@@ -64,8 +66,13 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User findUserByUserName(String username) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> opt = userRepository.findByUsername(username);
+
+		if (opt.isPresent()) {
+			return opt.get();
+		}
+
+		throw new UserException("user not exist with username: " + username);
 	}
 
 	@Override
@@ -124,25 +131,59 @@ public class UserServiceImplementation implements UserService {
 		userRepository.save(followUser);
 		userRepository.save(regUser);
 
-		return "you have unfollowed " + follower.getUserImage();
+		return "you have unfollowed " + followUser.getUsername();
 	}
 
 	@Override
 	public List<User> findUserByIds(List<Integer> userIds) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> users = userRepository.findAllUsersByUserIds(userIds);
+
+		return users;
 	}
 
 	@Override
 	public List<User> searchUser(String query) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> users = userRepository.findByQuery(query);
+
+		if (users.size() == 0) {
+			throw new UserException("user not found");
+		}
+
+		return users;
 	}
 
 	@Override
 	public User updateUserDetails(User updatedUser, User existingUser) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (updatedUser.getEmail() != null) {
+			existingUser.setEmail(updatedUser.getEmail());
+		}
+		if (updatedUser.getBio() != null) {
+			existingUser.setBio(updatedUser.getBio());
+		}
+		if (updatedUser.getName() != null) {
+			existingUser.setName(updatedUser.getName());
+		}
+		if (updatedUser.getUsername() != null) {
+			existingUser.setUsername(updatedUser.getUsername());
+		}
+		if (updatedUser.getMobile() != null) {
+			existingUser.setMobile(updatedUser.getMobile());
+		}
+		if (updatedUser.getGender() != null) {
+			existingUser.setGender(updatedUser.getGender());
+		}
+		if (updatedUser.getWebsite() != null) {
+			existingUser.setWebsite(updatedUser.getWebsite());
+		}
+		if (updatedUser.getImage() != null) {
+			existingUser.setImage(updatedUser.getImage());
+		}
+		if (updatedUser.getId().equals(existingUser.getId())) {
+			return userRepository.save(existingUser);
+		}
+
+		throw new UserException("you cant update this user");
 	}
 
 }

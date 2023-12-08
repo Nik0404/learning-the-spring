@@ -29,7 +29,7 @@ public class User {
 	private String username;
 	private String name;
 	private String email;
-	private String mobileString;
+	private String mobile;
 	private String website;
 	private String bio;
 	private String gender;
@@ -55,7 +55,7 @@ public class User {
 		
 	}
 	
-	public User(Integer id, String username, String name, String email, String mobileString, String website, String bio,
+	public User(Integer id, String username, String name, String email, String mobile, String website, String bio,
 			String gender, String image, String password, Set<UserDto> follower, Set<UserDto> following,
 			List<Story> stories, List<Post> savedPost) {
 		super();
@@ -63,7 +63,7 @@ public class User {
 		this.username = username;
 		this.name = name;
 		this.email = email;
-		this.mobileString = mobileString;
+		this.mobile = mobile;
 		this.website = website;
 		this.bio = bio;
 		this.gender = gender;
@@ -107,12 +107,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getMobileString() {
-		return mobileString;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setMobileString(String mobileString) {
-		this.mobileString = mobileString;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getWebsite() {
@@ -189,8 +189,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", name=" + name + ", email=" + email + ", mobileString="
-				+ mobileString + ", website=" + website + ", bio=" + bio + ", gender=" + gender + ", image=" + image
+		return "User [id=" + id + ", username=" + username + ", name=" + name + ", email=" + email + ", mobile="
+				+ mobile + ", website=" + website + ", bio=" + bio + ", gender=" + gender + ", image=" + image
 				+ ", password=" + password + ", follower=" + follower + ", following=" + following + "]";
 	}
 
